@@ -39,8 +39,8 @@ export class ProductsService extends PrismaClient implements OnModuleInit {
     };
   }
 
-  findOne(id: number) {
-    const product = this.product.findFirst({
+  async findOne(id: number) {
+    const product = await this.product.findFirst({
       where: {
         id,
       },
@@ -50,8 +50,15 @@ export class ProductsService extends PrismaClient implements OnModuleInit {
     return product;
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
-    return { id, ...updateProductDto };
+  async update(id: number, updateProductDto: UpdateProductDto) {
+    await this.findOne(id);
+    console.log(id);
+    return this.product.update({
+      where: {
+        id,
+      },
+      data: updateProductDto,
+    });
   }
 
   remove(id: number) {
