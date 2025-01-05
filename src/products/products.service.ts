@@ -81,7 +81,6 @@ export class ProductsService extends PrismaClient implements OnModuleInit {
 
   async validateProducts(ids: number[]) {
     ids = Array.from(new Set(ids));
-
     const products = await this.product.findMany({
       where: {
         id: {
